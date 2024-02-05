@@ -5,7 +5,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.Scanner;
 
 public class Project {
-    static String currentPath = "C:\\Users\\user\\IdeaProjects\\terminal";
+    static String currentPath = "C://Users//user//IdeaProjects//terminal";
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -31,8 +31,9 @@ public class Project {
                     }
                     if (cmd.startsWith("mkdir")) {
                         String folder = cmd.split(" ")[1];
-                        File file = new File(currentPath + folder);
-                        boolean mkdir = file.mkdir();
+                        File file = new File(currentPath + "/"+ folder);
+                        System.out.println("file = " + file);
+                        System.out.println(file.mkdir());
                     }
                     if (cmd.startsWith("rmdir")) {
                         String folder = cmd.split(" ")[1];
@@ -59,9 +60,9 @@ public class Project {
                     if (cmd.startsWith("copy")) {
                         String[] argsCopy = cmd.split(" ");
                         if (argsCopy.length == 3) {
-                            copyFile(argsCopy[1], argsCopy[2]);
+                            copy(argsCopy[1], argsCopy[2]);
                         } else {
-                            System.out.println("Invalid copy command. Usage: copy <source> <destination>");
+                            System.out.println("Invalid copy command.");
                         }
                     }
                 }
@@ -89,16 +90,31 @@ public class Project {
         }
     }
 
-    private static void copyFile(String source, String destination) {
-        Path sourcePath = Path.of(currentPath + "/" + source);
-        Path destinationPath = Path.of(currentPath + "/" + destination);
+    private static void copy(String source, String target) {
+        InputStream in;
+        OutputStream out=null;
+        try{
+            in=new FileInputStream(source);
+            out=new FileOutputStream(target);
 
-        try {
-            Files.copy(sourcePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);
-            System.out.println("File copied successfully.");
+            int a;
+            while((a= in.read())!=-1){
+                out.write((char)(a));
+            }
+
+            out.flush();
+
         } catch (IOException e) {
-            System.err.println("Error copying file: " + e.getMessage());
+            e.printStackTrace();
+        }finally {
+            try {
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+
+
     }
 
     private static void createFile(String fileName) {
