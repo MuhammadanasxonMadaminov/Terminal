@@ -1,11 +1,8 @@
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 import java.util.Scanner;
 
 public class Project {
-    static String currentPath = "C://Users//user//IdeaProjects//terminal";
+    static String currentPath = "C://";
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -15,7 +12,6 @@ public class Project {
         while (!cmd.equals("exit") && !cmd.equals("quit")) {
             System.out.print(currentPath + ">");
             cmd = sc.nextLine();
-            System.out.println("currentPath = " + currentPath);
             switch (cmd) {
                 case "dir" -> showDirectoryFiles(currentPath);
                 case "clear" -> clearConsole();
